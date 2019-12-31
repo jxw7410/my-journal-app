@@ -3,7 +3,7 @@ import {Redirect, Route} from 'react-router';
 import PropType from 'prop-types';
 
 
-function AuthRoute({component: Component, isLogin, exact, path, redirectPath}){
+export function AuthRoute({component: Component, isLogin, exact, path, redirectPath}){
   return (
     <Route 
       path={path}
@@ -18,7 +18,7 @@ function AuthRoute({component: Component, isLogin, exact, path, redirectPath}){
   )
 }
 
-function ProtectedRoute({component:Component, isLogin, exact, path, redirectPath}){
+export function ProtectedRoute({component:Component, isLogin, exact, path, redirectPath}){
   return (
     <Route 
       path={path}
@@ -50,6 +50,14 @@ AuthRoute.defaultProps = {
   exact: true,
   path: '/login',
   redirectPath: '/'
+}
+
+ProtectedRoute.defaultProps = {
+  component: () => <div />,
+  isLogin: false, 
+  exact: true,
+  path: '/',
+  redirectPath: '/login'
 }
 
 
