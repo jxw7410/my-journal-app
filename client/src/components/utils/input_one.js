@@ -26,6 +26,7 @@ function InputOne(props) {
       </InputLabel>
 
       <Input
+        autoComplete='true'
         isFocus={isFocus || props.value.length}
         onFocus={handleFocus(true)}
         onBlur={handleFocus(false)}

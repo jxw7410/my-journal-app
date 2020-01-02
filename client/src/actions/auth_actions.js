@@ -1,13 +1,23 @@
 import $ from 'jquery';
 import jwt_decode from 'jwt-decode'
 
-function requestUserAPI(data){
+function registerUserAPI(data){
   return $.ajax({
     type: 'POST',
     url: '/api/signup',
     data
   })
 }
+
+function loginUserAPI(data){
+  return $.ajax({
+    type:'POST',
+    url: '/api/login',
+    data
+  })
+}
+
+
 
 
 function receiveUser(user){
@@ -41,7 +51,14 @@ export function logoutUser(dispatch){
 
 export function registerUser(dispatch){
   return data => {
-    return requestUserAPI(data)
+    return registerUserAPI(data)
+      .then( res => authenticateUser(dispatch, res.jwt))
+  }
+}
+
+export function loginUser(dispatch){
+  return data => {
+    return loginUserAPI(data)
       .then( res => authenticateUser(dispatch, res.jwt))
   }
 }

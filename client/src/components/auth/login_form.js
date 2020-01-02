@@ -4,6 +4,7 @@ import InputOne from '../utils/input_one';
 import SubmitButton from './submit_button';
 import Footer from './footer';
 import {Link} from 'react-router-dom'
+import {loginUser} from '../../actions/auth_actions';
 
 function LoginForm(props){
   const [inputs, setInputs] = useState({
@@ -23,6 +24,9 @@ function LoginForm(props){
 
   const onClick = e => {
     e.preventDefault();
+    loginUser(props.appDispatch)({
+      user: inputs
+    })
   }
 
   return (

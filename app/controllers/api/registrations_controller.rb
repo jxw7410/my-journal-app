@@ -18,7 +18,6 @@ class Api::RegistrationsController < Devise::RegistrationsController
   end
 
   def configure_permitted_parameters
-    # devise has a sign_up strong param that uses devise_parameter_sanitizer.sanitize to get the strong params.
     devise_parameter_sanitizer.permit(:user, keys: [:username, :email, :password])
   end
 
