@@ -12,7 +12,7 @@ Rails.application.routes.draw do
              registrations: "api/registrations",
            }
 
-  namespace :v1, default: { format: "json" } do
+  namespace :api, default: { format: "json" } do
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

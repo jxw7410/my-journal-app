@@ -29,7 +29,7 @@ function AuthPage(props) {
 
   return (
     <AuthPageContainer>
-      <AuthForm>
+      <AuthForm onSubmit={ e => e.preventDefault()}>
         {components}
       </AuthForm>
     </AuthPageContainer>

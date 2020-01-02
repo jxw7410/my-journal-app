@@ -3,7 +3,6 @@ import Styled from 'styled-components';
 import PropType from 'prop-types';
 
 function SubmitButton(props) {
-
   return (
     <Button
       type='button'

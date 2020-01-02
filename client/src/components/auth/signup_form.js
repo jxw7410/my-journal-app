@@ -4,6 +4,7 @@ import InputOne from '../utils/input_one';
 import SubmitButton from './submit_button';
 import Footer from './footer';
 import { Link } from 'react-router-dom'
+import { registerUser } from '../../actions/auth_actions';
 
 function SignUpForm(props) {
   const [inputs, setInputs] = useState({
@@ -24,6 +25,9 @@ function SignUpForm(props) {
 
   const onClick = e => {
     e.preventDefault();
+    registerUser(props.appDispatch)({
+      user: inputs 
+    });
   }
 
   return (

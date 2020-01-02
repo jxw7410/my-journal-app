@@ -1,4 +1,6 @@
 export const initialAppstate = {
+  username: null, 
+  email: null,
   isLogin: false,
 }
 
@@ -6,10 +8,12 @@ export const initialAppstate = {
 export function AppReducer(state, action){
   Object.freeze(state);
   switch( action.type) {
-    case 'received_auth':
-      break;
+    case 'RECEIVE_USER':
+      return action.user;
+    case 'REMOVE_USER':
+      return initialAppstate;
     default:
-      break;
+      return state;
   }
 }
 

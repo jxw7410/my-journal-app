@@ -1,24 +1,29 @@
 class Api::RegistrationsController < Devise::RegistrationsController
-  skip_before_filter :verify_authenticity_token, only: [:create]
+  before_action :configure_permitted_parameters
   respond_to :json
 
   def create
     build_resource(sign_up_params)
     if resource.save
-      render json: resource
-    else 
-      render json: resource.errors.full_messages
+      jwt_token = sign_up(resource_name, resource)
+      render json: {jwt: jwt_token }, status: 200
+    else
+      render json: resource.errors.full_messages, status: 422
     end
   end
 
   private
-  def sign_up_params
-    ActionController::Parameters.new({
-      user: {
-        username: params[:username],
-        email: params[:email],
-        password: params[:password]
-      }
-    }).require(:user).permit(:username, :email, :password)
+  def sign_up_params 
+    devise_parameter_sanitizer.sanitize(:user)
+  end
+
+  def configure_permitted_parameters
+    # devise has a sign_up strong param that uses devise_parameter_sanitizer.sanitize to get the strong params.
+    devise_parameter_sanitizer.permit(:user, keys: [:username, :email, :password])
+  end
+
+  def sign_up(resource_name, resource)
+    sign_in(resource_name, resource)
+    request.env["warden-jwt_auth.token"]
   end
 end
