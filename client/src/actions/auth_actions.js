@@ -18,8 +18,6 @@ function loginUserAPI(data){
 }
 
 
-
-
 function receiveUser(user){
   return {
     type: 'RECEIVE_USER',

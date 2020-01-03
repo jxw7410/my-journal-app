@@ -1,62 +1,41 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { Switch } from 'react-router';
 import { HashRouter } from 'react-router-dom';
 import { initialAppstate, AppReducer } from '../reducers/app_reducer';
 import AuthPage from '../components/auth/auth_page';
 import { AuthRoute, ProtectedRoute } from './utils/auth';
-import {AppContext} from '../utils/app_context';
-import jwt_decoded from 'jwt-decode';
-import {logoutUser} from '../actions/auth_actions';
+import { AppContext } from '../utils/app_context';
+import IndexPage from '../components/main/index_page';
+import TopNav from '../components/nav/top_nav';
 
-function App() {
-  const [appState, appDispatch] = React.useReducer(AppReducer, initialAppstate);
 
-  useEffect(() => {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt){
-      const decoded = jwt_decoded(jwt);
-      const timeInSeconds = new Date().getTime() / 1000;
-      if (timeInSeconds > decoded.exp) {
-        logoutUser(appDispatch);
-      } else {
-        appDispatch({
-          type: 'RECEIVE_USER',
-          user : {
-            username: decoded.username,
-            email: decoded.email,
-            isLogin: true,
-          }
-        })
-      }
-    }
-  },[])
-
+function App({ initialState }) {
+  const [appState, appDispatch] = React.useReducer(AppReducer, initialState || initialAppstate);
   // For debugging
-  useEffect(() => {
-    window.appState = appState;
-  }, [appState])
-
+  // window.appState = appState;
   return (
-    <AppContext.Provider value={ { appState, appDispatch }}>
+    <AppContext.Provider value={{ appState, appDispatch }}>
       <HashRouter>
+        { appState.isLogin ? <TopNav /> : null }
         <Switch>
-          <AuthRoute 
-            exact 
+          <AuthRoute
+            exact
             path='/login'
-            redirectPath='/' 
+            redirectPath='/'
             isLogin={appState.isLogin}
             component={AuthPage}
           />
-          <AuthRoute 
+          <AuthRoute
             path='/signup'
             redirectPath='/'
             isLogin={appState.isLogin}
             component={AuthPage}
           />
-          <ProtectedRoute 
+          <ProtectedRoute
             path='/'
             isLogin={appState.isLogin}
             redirectPath='/login'
+            component={IndexPage}
           />
         </Switch>
       </HashRouter>
