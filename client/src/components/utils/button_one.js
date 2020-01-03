@@ -49,6 +49,7 @@ const Button = Styled.button`
   transition: all 0.1s linear;
 
   &:hover{
+    cursor: pointer;
     color: ${({ background }) => background};
     background: white;
   }

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useAppContext} from '../../utils/app_context';
+import {useAuthContext} from '../../utils/auth_context';
 import InputOne from '../utils/input_one';
 import SubmitButton from './submit_button';
 import Footer from './footer';
@@ -24,7 +24,7 @@ function LoginForm(props){
 
   const onClick = e => {
     e.preventDefault();
-    loginUser(props.appDispatch)({
+    loginUser(props.authDispatch)({
       user: inputs
     })
   }
@@ -67,4 +67,4 @@ function LoginForm(props){
   )
 }
 
-export default useAppContext(LoginForm);
+export default useAuthContext(LoginForm);

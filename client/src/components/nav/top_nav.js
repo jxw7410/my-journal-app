@@ -1,14 +1,14 @@
 import React from 'react';
 import Styled from 'styled-components';
 import {logoutUser} from '../../actions/auth_actions';
-import { useAppContext } from '../../utils/app_context';
+import { useAuthContext } from '../../utils/auth_context';
 import { Link} from 'react-router-dom';
 
 function TopNav(props){
 
   const onLogoutClick = e => {
     e.preventDefault();
-    logoutUser(props.appDispatch);
+    logoutUser(props.authDispatch);
   }
 
 
@@ -74,7 +74,7 @@ const LogOutButton = Styled.button`
   }
 `
 
-export default useAppContext(TopNav);
+export default useAuthContext(TopNav);
 
 
 

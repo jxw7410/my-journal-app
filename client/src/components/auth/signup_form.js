@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAppContext } from '../../utils/app_context';
+import { useAuthContext } from '../../utils/auth_context';
 import InputOne from '../utils/input_one';
 import SubmitButton from './submit_button';
 import Footer from './footer';
@@ -25,7 +25,7 @@ function SignUpForm(props) {
 
   const onClick = e => {
     e.preventDefault();
-    registerUser(props.appDispatch)({
+    registerUser(props.authDispatch)({
       user: inputs 
     });
   }
@@ -76,4 +76,4 @@ function SignUpForm(props) {
   )
 }
 
-export default useAppContext(SignUpForm);
+export default useAuthContext(SignUpForm);

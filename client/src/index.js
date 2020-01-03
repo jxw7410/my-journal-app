@@ -6,7 +6,7 @@ import jwt_decoded from 'jwt-decode';
 
 
 document.addEventListener('DOMContentLoaded', () =>{
-  let initialState;
+  let initialAuthState;
   const jwt = localStorage.getItem('jwt');  
   if (jwt) {
     const decoded = jwt_decoded(jwt);
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     if (timeInSeconds > decoded.exp) {
       localStorage.removeItem('jwt')
     } else {
-      initialState = {
+      initialAuthState = {
         username: decoded.username,
         email: decoded.email,
         isLogin: true,
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () =>{
   }
 
 
-  ReactDOM.render(<App initialState={initialState} />, document.getElementById('root'));
+  ReactDOM.render(<App initialAuthState={initialAuthState} />, document.getElementById('root'));
 })
 
 

@@ -18,7 +18,7 @@ function IndexPage(props) {
   }, [])
 
   const listOfJournals = Object.values(journalState).map(journal =>
-    <JournalTab key={journal.id} name={journal.name} />
+    <JournalTab key={journal.id} id={journal.id} name={journal.name} />
   )
 
   return (

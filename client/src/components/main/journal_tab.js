@@ -1,11 +1,45 @@
 import React from 'react';
 import Styled from 'styled-components';
 import ButtonOne from '../utils/button_one';
+import PropTypes from 'prop-types';
+import { openModal } from '../../actions/modal_action';
+import { useModalContext } from '../../utils/modal_context';
+import { useJournalContext } from '../../utils/journal_context';
+import { editJournal, deleteJournal } from '../../actions/journal_actions';
 
-function JournalTab({ name }) {
+function JournalTab({ id, name, modalDispatch, journalDispatch }) {
 
-  const onClick = e => {
+  const editJournalName = newName => {
+    return editJournal(journalDispatch)({
+      id,
+      name: newName
+    })
+  }
+
+  const removeJournal = () => {
+    return deleteJournal(journalDispatch)({ id })
+  }
+
+  const onClick = field => e => {
     e.preventDefault();
+    let modalMeta = {
+      modalType: "",
+      modalProps: { name }
+    };
+
+    switch (field) {
+      case 'EDIT':
+        modalMeta.modalType = 'EDIT_JOURNAL_NAME';
+        modalMeta.modalCB = editJournalName;
+        break;
+      case 'DELETE':
+        modalMeta.modalType = 'DELETE_JOURNAL';
+        modalMeta.modalCB = removeJournal;
+        break;
+      default: break;
+    }
+
+    modalDispatch(openModal(modalMeta));
   }
 
   return (
@@ -17,7 +51,7 @@ function JournalTab({ name }) {
       <JournalOptions>
         <ButtonOne
           tabIndex='-1'
-          onClick={onClick}
+          onClick={onClick('EDIT')}
           width={75}
           background={'Green'}
         >
@@ -25,7 +59,7 @@ function JournalTab({ name }) {
         </ButtonOne>
         <ButtonOne
           tabIndex='-1'
-          onClick={onClick}
+          onClick={onClick('DELETE')}
           width={75}
           background={'Red'}
         >
@@ -34,6 +68,13 @@ function JournalTab({ name }) {
       </JournalOptions>
     </JournalTabContainer>
   )
+}
+
+JournalTab.propTypes = {
+  id: PropTypes.number,
+  name: PropTypes.string,
+  modalDispatch: PropTypes.func.isRequired,
+  journalDispatch: PropTypes.func.isRequired,
 }
 
 
@@ -85,4 +126,4 @@ const JournalTabContainer = Styled.li`
   }
 `
 
-export default JournalTab;
+export default useJournalContext(useModalContext(JournalTab));

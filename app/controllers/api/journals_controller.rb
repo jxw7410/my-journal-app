@@ -15,6 +15,24 @@ class Api::JournalsController < ApplicationController
     end 
   end
 
+  def update 
+    @journal = Journal.find(params[:id])
+    if @journal.update(name: params[:name])
+      render :show
+    else 
+      render json: @journal.errors.full_messages, status: 422
+    end
+  end
+
+
+  def destroy
+    @journal = Journal.find(params[:id])
+    if @journal.destroy
+      render json: { journalId: @journal.id }, status: 200
+    else 
+      render json: ['Unable to destroy entity'], status: 422
+    end
+  end 
 
   private 
 

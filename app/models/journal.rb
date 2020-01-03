@@ -12,7 +12,7 @@
 class Journal < ApplicationRecord
   before_validation :format_name 
   validates :user_id, :name, presence: true
-  validates :user_id, uniqueness: { scope: :name} # [:user_id, :name] are unique
+  validates :user_id, uniqueness: { scope: :name, message: "Journal name is already used."}
 
 
   private

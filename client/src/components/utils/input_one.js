@@ -47,6 +47,8 @@ InputOne.propTypes = {
   onChange: PropType.func,
   label: PropType.string,
   type: PropType.string,
+  width: PropType.string,
+  height: PropType.string,
 }
 
 InputOne.defaultProps = {
@@ -54,7 +56,9 @@ InputOne.defaultProps = {
   padding: 4,
   value: "",
   label: 'label',
-  type: "text"
+  type: "text",
+  width: "90%",
+  height: "35px",
 }
 
 
@@ -64,8 +68,8 @@ const InputContainer = Styled.div`
   align-items: center;
   position: relative;
   margin: ${ ({ padding }) => padding + 'px'};
-  width: ${ ({ width }) => width || '90%'};
-  height: ${ ({ height }) => height || '35px'};
+  width: ${ ({ width }) => width};
+  height: ${ ({ height }) => height};
 `
 
 const InputLabel = Styled.label`
