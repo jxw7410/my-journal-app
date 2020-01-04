@@ -2,7 +2,7 @@ class Api::JournalsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @journals = Journal.all
+    @journals = Journal.where(user_id: current_user.id)
     render :index
   end
 

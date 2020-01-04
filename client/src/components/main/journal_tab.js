@@ -6,9 +6,9 @@ import { openModal } from '../../actions/modal_action';
 import { useModalContext } from '../../utils/modal_context';
 import { useJournalContext } from '../../utils/journal_context';
 import { editJournal, deleteJournal } from '../../actions/journal_actions';
+import { Link } from 'react-router-dom';
 
-function JournalTab({ id, name, modalDispatch, journalDispatch }) {
-
+function JournalTab({ id, name, modalDispatch, journalDispatch, history }) {
   const editJournalName = newName => {
     return editJournal(journalDispatch)({
       id,
@@ -43,30 +43,42 @@ function JournalTab({ id, name, modalDispatch, journalDispatch }) {
   }
 
   return (
-    <JournalTabContainer
-      tabIndex='0'>
-      <JournalTitle>
-        {name}
-      </JournalTitle>
-      <JournalOptions>
-        <ButtonOne
-          tabIndex='-1'
-          onClick={onClick('EDIT')}
-          width={75}
-          background={'Green'}
-        >
-          Edit
+    <Link
+      tabIndex='-1'
+      to={`/${name}`}
+      style={
+        { 
+          textDecoration: 'none', 
+          width: 'auto', 
+          height: 'auto',
+        }
+      }
+    >
+      <JournalTabContainer
+        tabIndex='0'>
+        <JournalTitle>
+          {name}
+        </JournalTitle>
+        <JournalOptions>
+          <ButtonOne
+            tabIndex='-1'
+            onClick={onClick('EDIT')}
+            width={75}
+            background={'Green'}
+          >
+            Edit
         </ButtonOne>
-        <ButtonOne
-          tabIndex='-1'
-          onClick={onClick('DELETE')}
-          width={75}
-          background={'Red'}
-        >
-          Delete
+          <ButtonOne
+            tabIndex='-1'
+            onClick={onClick('DELETE')}
+            width={75}
+            background={'Red'}
+          >
+            Delete
         </ButtonOne>
-      </JournalOptions>
-    </JournalTabContainer>
+        </JournalOptions>
+      </JournalTabContainer>
+    </Link>
   )
 }
 
@@ -116,7 +128,7 @@ const JournalTabContainer = Styled.li`
     box-shadow: 0px 0px 8px gray;
   }
 
-  &:hover > ${JournalOptions}, &:focus > ${JournalOptions} {
+  &:hover ${JournalOptions}, &:focus ${JournalOptions} {
     width: 125px;
   }
 

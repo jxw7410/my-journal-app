@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Styled from 'styled-components';
-import PropType from 'prop-types'
+import ErrorMessage from './error_message';
+import PropType from 'prop-types';
+
 
 function InputOne(props) {
+  const inputRef = useRef(null);
   const [isFocus, setIsFocus] = useState(false);
 
   const handleFocus = bool => {
@@ -14,29 +17,34 @@ function InputOne(props) {
 
 
   return (
-    <InputContainer
-      padding={props.padding}
-      width={props.width}
-      height={props.height}>
-      <InputLabel
-        isFocus={isFocus || props.value.length}
-        fSize={props.fontSize}
-        padding={props.padding}>
-        {props.label}
-      </InputLabel>
-
-      <Input
-        autoComplete='true'
-        isFocus={isFocus || props.value.length}
-        onFocus={handleFocus(true)}
-        onBlur={handleFocus(false)}
-        type={props.type}
-        fSize={props.fontSize}
+    <>
+      { props.error ? <ErrorMessage>{props.error}</ErrorMessage> : null}
+      <InputContainer
         padding={props.padding}
-        onChange={props.onChange}
-        value={props.value}
-      />
-    </InputContainer>
+        width={props.width}
+        height={props.height}>
+        <InputLabel
+          onClick={ () => inputRef.current.focus()}
+          isFocus={isFocus || props.value.length}
+          fSize={props.fontSize}
+          padding={props.padding}>
+          {props.label}
+        </InputLabel>
+
+        <Input
+          ref={inputRef}
+          autoComplete='true'
+          isFocus={isFocus || props.value.length}
+          onFocus={handleFocus(true)}
+          onBlur={handleFocus(false)}
+          type={props.type}
+          fSize={props.fontSize}
+          padding={props.padding}
+          onChange={props.onChange}
+          value={props.value}
+        />
+      </InputContainer>
+    </>
   )
 }
 
@@ -49,6 +57,7 @@ InputOne.propTypes = {
   type: PropType.string,
   width: PropType.string,
   height: PropType.string,
+  error: PropType.string,
 }
 
 InputOne.defaultProps = {
@@ -81,7 +90,7 @@ const InputLabel = Styled.label`
   font-size: ${ ({ fSize, isFocus }) => (isFocus ? fSize / 2 : fSize) + 'px'}
   top: ${ ({ fSize, isFocus }) => isFocus ? '-2px' : `calc(50% - ${fSize / 2 + 'px'})`};
 `
-  
+
 const Input = Styled.input`
   margin: 0;
   width: 100%;
@@ -90,7 +99,7 @@ const Input = Styled.input`
   border-style: none;
   border:${ ({ isFocus }) => `1px solid ${isFocus ? 'rgb(26, 115, 232)' : 'lightgray'}`};
   font-size: ${ ({ fSize }) => fSize + 'px'}
-  padding: ${ ({ padding }) => `${padding}px ${2*padding}px`};
+  padding: ${ ({ padding }) => `${padding}px ${2 * padding}px`};
 `
 
 

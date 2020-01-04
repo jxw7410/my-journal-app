@@ -1,12 +1,16 @@
-import React, {useState} from 'react';
-import {useAuthContext} from '../../utils/auth_context';
+import React, { useState } from 'react';
 import InputOne from '../utils/input_one';
 import SubmitButton from './submit_button';
 import Footer from './footer';
-import {Link} from 'react-router-dom'
-import {loginUser} from '../../actions/auth_actions';
+import DemoLogin from './demo_login';
+import ErrorMessage from '../utils/error_message';
+import { Link } from 'react-router-dom'
+import { loginUser } from '../../actions/auth_actions';
+import { useAuthContext } from '../../utils/auth_context';
 
-function LoginForm(props){
+
+function LoginForm(props) {
+  const [error, setError] = useState("");
   const [inputs, setInputs] = useState({
     password: '',
     email: '',
@@ -27,22 +31,31 @@ function LoginForm(props){
     loginUser(props.authDispatch)({
       user: inputs
     })
+    .catch( err => {
+      switch(err.status){
+        case 401:
+          return setError("Invalid Email or Password")
+        default:
+          break;
+      }
+    })
   }
 
   return (
     <>
+      { error.length ? <ErrorMessage>{error}</ErrorMessage> : null }
       <br />
 
-      <InputOne 
+      <InputOne
         label='Email'
         type='email'
         onChange={onChange('email')}
         value={inputs.email}
       />
 
-      <br/>
+      <br />
 
-      <InputOne 
+      <InputOne
         label='Password'
         type='password'
         onChange={onChange('password')}
@@ -52,14 +65,16 @@ function LoginForm(props){
       <br />
 
       <SubmitButton
-        onClick={onClick}> 
-        LOGIN 
+        onClick={onClick}>
+        LOGIN
       </SubmitButton>
 
       <br />
 
       <Footer>
-        <span>Not Register? <Link to='/signup'>Register Now</Link></span>
+        <span>
+          Not Register? <Link to='/signup'>Register Now</Link> or <DemoLogin>Demo</DemoLogin>
+        </span>
       </Footer>
 
       <br />

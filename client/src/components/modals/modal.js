@@ -2,7 +2,6 @@ import React, {memo} from 'react';
 import PropType from 'prop-types';
 import Styled from 'styled-components';
 import { useModalContext } from '../../utils/modal_context';
-import { closeModal } from '../../actions/modal_action';
 import EditJournalModal from './edit_journal_modal';
 import DeleteJournalModal from './delete_journal_modal';
 
@@ -22,7 +21,6 @@ function Modal(props){
 
   return (
     <ModalContainer 
-      onClick={ e => props.modalDispatch(closeModal())}
       style={{display: component ? null : 'none'}}
     >
       {component}

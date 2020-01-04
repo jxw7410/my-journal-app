@@ -56,7 +56,6 @@ export function createJournal(dispatch){
   return data => (
     createJournalAPI(data)
       .then( res => dispatch(receiveJournal(res.journal)))
-      .catch( err => console.log(err.responseText))
   )
 }
 
@@ -64,7 +63,6 @@ export function editJournal(dispatch){
   return data => (
     editJournalAPI(data)
       .then( res => dispatch(receiveJournal(res.journal)))
-      .catch( err => console.log(err.responseText))
   )
 }
 
@@ -72,7 +70,6 @@ export function fetchJournals(dispatch){
   return () => (
     fetchJournalsAPI()
       .then( res => dispatch(receiveJournals(res.journals)))
-      .catch( err => console.log(err.responseText))
   )
 }
 
@@ -80,7 +77,6 @@ export function deleteJournal(dispatch){
   return data => (
     deleteJournalAPI(data.id)
       .then( res => dispatch(removeJournal(res.journalId)))
-      .catch( err => console.log(err.responseText))
   )
 }
 

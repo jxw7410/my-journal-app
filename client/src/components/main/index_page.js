@@ -8,16 +8,14 @@ import JournalTab from './journal_tab';
 
 
 
-function IndexPage(props) {
+function IndexPage() {
   const [journalState, journalDispatch] = useReducer(journalReducer, {})
-  // for debugging
-  window.journalState = journalState;
 
   useEffect(() => {
     fetchJournals(journalDispatch)();
   }, [])
 
-  const listOfJournals = Object.values(journalState).map(journal =>
+  const listOfJournals = Object.values(journalState || {}).map(journal =>
     <JournalTab key={journal.id} id={journal.id} name={journal.name} />
   )
 

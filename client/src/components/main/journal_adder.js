@@ -1,16 +1,23 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Styled from 'styled-components';
-import {useJournalContext} from '../../utils/journal_context';
-import { createJournal} from '../../actions/journal_actions';
+import JournalAdderErrorDropdown from './journal_adder_error_dropdown';
+import ErrorMessage from '../utils/error_message';
+import { useJournalContext } from '../../utils/journal_context';
+import { createJournal } from '../../actions/journal_actions';
 
-function JournalAdder(props){
+function JournalAdder(props) {
+  const [error, setError] = useState({
+    render: false,
+    message: ""
+  });
+
   const [input, setInput] = useState({
     name: ""
   });
 
   const onChange = e => {
     e.preventDefault();
-    setInput({name: e.currentTarget.value});
+    setInput({ name: e.currentTarget.value });
   }
 
   const onClick = e => {
@@ -18,18 +25,36 @@ function JournalAdder(props){
     createJournal(props.journalDispatch)({
       journal: input
     })
+      .fail(err => handleError(err))
+  }
+
+  const handleError = err => {
+    switch (err.status) {
+      case 422:
+        setError({
+          render: true, 
+          message: err.responseJSON[0]
+        });
+        break;
+      default:
+        break;
+    }
   }
 
   return (
     <JournalAdderContainer>
-      <JournalInput 
+      <JournalInput
+        onFocus={ () => setError({...error, render: false}) }
         onChange={onChange}
         value={input.name}
         placeholder='Add a new Journal'
       />
-      <AddJournalButton onClick={onClick}> 
-        Add 
+      <AddJournalButton onClick={onClick}>
+        Add
       </AddJournalButton>
+      <JournalAdderErrorDropdown opacity={error.render ? "1" : "0"} >
+        <ErrorMessage fontSize='0.6em'>{error.message}</ErrorMessage>
+      </JournalAdderErrorDropdown>
     </JournalAdderContainer>
   )
 }
@@ -37,6 +62,7 @@ function JournalAdder(props){
 
 
 const JournalAdderContainer = Styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
