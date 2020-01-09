@@ -14,7 +14,7 @@ export function useJournalContext(Component){
     return (
       <Component 
         journalDispatch={journalDispatch}
-        {...journalState}
+        journalState={journalState}
         {...props}
       />
     )

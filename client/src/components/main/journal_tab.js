@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import Styled from 'styled-components';
 import ButtonOne from '../utils/button_one';
 import PropTypes from 'prop-types';
@@ -8,7 +8,7 @@ import { useJournalContext } from '../../utils/journal_context';
 import { editJournal, deleteJournal } from '../../actions/journal_actions';
 import { Link } from 'react-router-dom';
 
-function JournalTab({ id, name, modalDispatch, journalDispatch, history }) {
+function JournalTab({ id, name, modalDispatch, journalDispatch }) {
   const editJournalName = newName => {
     return editJournal(journalDispatch)({
       id,
@@ -138,4 +138,4 @@ const JournalTabContainer = Styled.li`
   }
 `
 
-export default useJournalContext(useModalContext(JournalTab));
+export default useJournalContext(useModalContext(memo(JournalTab)));

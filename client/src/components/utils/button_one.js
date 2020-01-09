@@ -6,6 +6,7 @@ import PropType from 'prop-types';
 function ButtonOne(props){
   return (
     <Button
+      style={props.style}
       tabIndex={props.tabIndex}
       background={props.background}
       width={props.width}
@@ -26,6 +27,7 @@ ButtonOne.propTypes = {
   tabIndex: PropType.string,
   background: PropType.string,
   text: PropType.string,
+  style: PropType.object,
 }
 
 ButtonOne.defaultProps = {

@@ -1,5 +1,4 @@
-import React, { useReducer, useEffect } from 'react';
-import Styled from 'styled-components';
+import React, { useReducer, useEffect } from 'react'; import Styled from 'styled-components';
 import { journalReducer } from '../../reducers/journals_reducer';
 import { JournalContext } from '../../utils/journal_context';
 import { fetchJournals } from '../../actions/journal_actions';
@@ -21,7 +20,7 @@ function IndexPage() {
 
   return (
     <IndexPageContainer>
-      <JournalContext.Provider value={{ journalState, journalDispatch }}>
+      <JournalContext.Provider value={{ journalDispatch }}>
         <JournalAdder />
         <JournalLists>
           {listOfJournals}

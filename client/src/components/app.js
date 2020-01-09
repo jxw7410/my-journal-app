@@ -10,7 +10,7 @@ import Modal from '../components/modals/modal';
 import AuthPage from '../components/auth/auth_page';
 import IndexPage from '../components/main/index_page';
 import TopNav from '../components/nav/top_nav';
-import JournalPage from '../components/journals/journal_page';
+import EntriesPage from '../components/entries/entries_page';
 
 function App({ initialAuthState }) {
   const [authState, authDispatch] = React.useReducer(authReducer, initialAuthState || defaultAuthState);
@@ -48,7 +48,7 @@ function App({ initialAuthState }) {
               path='/:journal'
               isLogin={authState.isLogin}
               redirectPath='/login'
-              component={JournalPage}
+              component={EntriesPage}
             />
           </Switch>
         </HashRouter>

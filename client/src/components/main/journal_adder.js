@@ -25,6 +25,7 @@ function JournalAdder(props) {
     createJournal(props.journalDispatch)({
       journal: input
     })
+      .then(() => setInput({ name: "" }))
       .fail(err => handleError(err))
   }
 
@@ -32,7 +33,7 @@ function JournalAdder(props) {
     switch (err.status) {
       case 422:
         setError({
-          render: true, 
+          render: true,
           message: err.responseJSON[0]
         });
         break;
@@ -44,7 +45,7 @@ function JournalAdder(props) {
   return (
     <JournalAdderContainer>
       <JournalInput
-        onFocus={ () => setError({...error, render: false}) }
+        onFocus={() => setError({ ...error, render: false })}
         onChange={onChange}
         value={input.name}
         placeholder='Add a new Journal'

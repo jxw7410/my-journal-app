@@ -1,21 +1,31 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import Styled from 'styled-components';
+import ButtonOne from '../utils/button_one';
+import {useEntryContext} from '../../utils/entry_context'
 
-
-function Editor() {
+function Editor(props) {
   const textEditorRef = useRef();
   const [uiButtonActiveState, setUIButtonActiveState] = useState({
     bold: false,
     italic: false,
   });
 
+  const [count, setCount] = React.useState(0);
+
   const onClickFormatText = type => {
-    return e => {
+    return async (e) => {
       e.preventDefault();
-      if(textEditorRef.current !== document.activeElement) { 
-        textEditorRef.current.focus() 
+      if (textEditorRef.current !== document.activeElement) {
+        textEditorRef.current.focus()
       }
-      document.execCommand(type, false, null);
+
+      await new Promise(resolve =>
+        setTimeout(() => {
+          document.execCommand(type, false, null);
+          resolve();
+        }, 0)
+      );
+
       setUIButtonActiveState({
         ...uiButtonActiveState,
         [type]: !uiButtonActiveState[type]
@@ -24,36 +34,66 @@ function Editor() {
   }
 
 
+
+  const onAddEntry = e => {
+    e.preventDefault();
+    // Test
+    props.entryDispatch({
+      type: 'RECEIVE_ENTRY',
+      entry: { 
+        [count]: {
+          id: count,
+          html: textEditorRef.current.innerHTML 
+        }
+      }
+    })
+
+    setCount(count + 1);
+  }
+
+
   return (
     <EditorContainer>
       <TextEditorUI>
-        <UIButton 
-          active={uiButtonActiveState.bold} 
+        <UIButton
+          active={uiButtonActiveState.bold}
           onClick={onClickFormatText('bold')}>
-            <b>B</b>
+          <b>B</b>
         </UIButton>
-        <UIButton 
-          active={uiButtonActiveState.italic} 
+        <UIButton
+          active={uiButtonActiveState.italic}
           onClick={onClickFormatText('italic')}>
-            <i>I</i>
+          <i>I</i>
         </UIButton>
       </TextEditorUI>
-      <TextEditor
-        ref={textEditorRef}
-        suppressContentEditableWarning={true}
-        autoComplete="off"
-        autoCorrect="off"
-        spellCheck="true"
-        aria-autocomplete="list"
-        aria-multiline="true"
-        aria-label="Message"
-        dir="auto"
-        contentEditable="true"
-        role="textbox"
-        tabIndex='0'
-      >
-        <p></p>
-      </TextEditor>
+      <TextEditorContainer>
+        <TextEditor
+          ref={textEditorRef}
+          suppressContentEditableWarning={true}
+          autoComplete="off"
+          autoCorrect="off"
+          spellCheck="true"
+          aria-autocomplete="list"
+          aria-multiline="true"
+          aria-label="Message"
+          dir="auto"
+          contentEditable="true"
+          role="textbox"
+          tabIndex='0'
+        >
+        </TextEditor>
+        <ButtonContainer>
+          <ButtonOne
+            style={{margin: '0 10px'}}
+            width={80}
+            height={30}
+            background='green'
+            onClick={onAddEntry}
+          >
+            Add
+        </ButtonOne>
+        </ButtonContainer>
+      </TextEditorContainer>
     </EditorContainer>
   )
 
@@ -66,11 +106,15 @@ const EditorContainer = Styled.div`
   border: 1px solid royalblue;
   border-radius: 5px;
   width: 80vw;
-  height: 150px;
+  min-height: 150px;
   display: grid;
   grid-template-rows: 40px auto;
 `
 
+const TextEditorContainer = Styled.div`
+  display: grid;
+  grid-template-rows: auto 40px;
+`
 const TextEditor = Styled.div`
   user-select: text;
   cursor: text;
@@ -78,7 +122,6 @@ const TextEditor = Styled.div`
   white-space: pre-wrap;
   word-wrap: break-word;
   padding: 10px;
-  
   &:focus{
     outline: none
   }
@@ -119,4 +162,10 @@ const UIButton = Styled.button`
   }
 `
 
-export default Editor;
+const ButtonContainer = Styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`
+
+export default useEntryContext(Editor);
