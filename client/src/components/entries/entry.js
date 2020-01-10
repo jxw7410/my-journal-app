@@ -12,6 +12,9 @@ const EntryContainer = Styled.li`
   width: 80vw;
   padding: 10px;
   border-radius: 5px;
+  background: royalblue;
+  margin: 10px 0;
+  color: white;
 `
 
 

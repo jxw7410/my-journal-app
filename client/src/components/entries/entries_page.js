@@ -12,11 +12,9 @@ function EntriesPage(props) {
     console.log(entriesState);
   }, [entriesState])
 
-  
+
   const listOfEntries = Object.values(entriesState).map( ({id, html}) => 
-    <Entry key={id}>
-      {html}
-    </Entry>
+    <Entry key={id}>{html}</Entry>
   );
 
   return (
@@ -43,6 +41,7 @@ const Container = Styled.div`
 
 
 const Entries = Styled.ul`
+  padding: 0;
   margin: 0;
   list-style: none;
   display: flex;
