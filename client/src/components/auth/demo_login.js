@@ -1,7 +1,7 @@
 import React, {memo} from 'react';
 import Styled from 'styled-components';
 import PropType from 'prop-types';
-import { useAuthContext } from '../../utils/auth_context';
+import { withAuthContext } from '../../utils/auth_context';
 import { loginUser } from '../../actions/auth_actions';
 
 
@@ -33,4 +33,4 @@ const Span = Styled.span`
 `
 
 
-export default useAuthContext(memo(DemoLogin));
+export default withAuthContext(memo(DemoLogin));

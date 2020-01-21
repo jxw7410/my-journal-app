@@ -33,7 +33,7 @@ SubmitButton.defaultProps = {
 const Button = Styled.button`
   width: ${({ width }) => width}
   height: ${({ height }) => height}
-  background: purple;
+  background: ${props => props.theme.bg};
   color: white;
   font-weight: 500;
   font-size: ${({fSize}) => fSize}
@@ -42,7 +42,7 @@ const Button = Styled.button`
 
   &:hover {
     cursor: pointer;
-    background: #bf44bf;
+    opacity: 0.85;
   }
 `
 

@@ -52,7 +52,7 @@ InputOne.propTypes = {
   fontSize: PropType.number,
   padding: PropType.number,
   value: PropType.string,
-  onChange: PropType.func,
+  onChange: PropType.func.isRequired,
   label: PropType.string,
   type: PropType.string,
   width: PropType.string,

@@ -1,7 +1,7 @@
 import React from 'react';
 import Styled from 'styled-components';
 import {logoutUser} from '../../actions/auth_actions';
-import { useAuthContext } from '../../utils/auth_context';
+import { withAuthContext } from '../../utils/auth_context';
 import { Link} from 'react-router-dom';
 
 function TopNav(props){
@@ -10,7 +10,6 @@ function TopNav(props){
     e.preventDefault();
     logoutUser(props.authDispatch);
   }
-
 
   return (
     <TopNavContainer>
@@ -47,7 +46,7 @@ const TopNavContainer = Styled.nav`
   position: absolute;
   height: 85px;
   width: 100vw;
-  background: purple;
+  background: ${props => props.theme.bg};
 `
 
 const Section = Styled.section`
@@ -74,7 +73,7 @@ const LogOutButton = Styled.button`
   }
 `
 
-export default useAuthContext(TopNav);
+export default withAuthContext(TopNav);
 
 
 

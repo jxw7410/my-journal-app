@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuthContext } from '../../utils/auth_context';
+import { withAuthContext } from '../../utils/auth_context';
 import InputOne from '../utils/input_one';
 import SubmitButton from './submit_button';
 import Footer from './footer';
@@ -95,4 +95,4 @@ function SignUpForm(props) {
   )
 }
 
-export default useAuthContext(SignUpForm);
+export default withAuthContext(SignUpForm);

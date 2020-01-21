@@ -154,7 +154,7 @@ function Editor(props) {
 const EditorContainer = Styled.div`
   border: 1px solid royalblue;
   border-radius: 5px;
-  width: 80vw;
+  width: 100%;
   min-height: 150px;
   display: grid;
   grid-template-rows: 40px auto;

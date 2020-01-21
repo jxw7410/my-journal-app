@@ -6,7 +6,7 @@ import DemoLogin from './demo_login';
 import ErrorMessage from '../utils/error_message';
 import { Link } from 'react-router-dom'
 import { loginUser } from '../../actions/auth_actions';
-import { useAuthContext } from '../../utils/auth_context';
+import { withAuthContext } from '../../utils/auth_context';
 
 
 function LoginForm(props) {
@@ -82,4 +82,4 @@ function LoginForm(props) {
   )
 }
 
-export default useAuthContext(LoginForm);
+export default withAuthContext(LoginForm);

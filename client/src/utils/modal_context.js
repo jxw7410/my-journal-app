@@ -7,7 +7,7 @@ export const ModalContext = createContext({
   modalDispatch: () => { return; }, 
 });
 
-export function useModalContext(Component){
+export function withModalContext(Component){
   const ContextedComponent = props => {
     const { modalState, modalDispatch } = useContext(ModalContext);
     return (

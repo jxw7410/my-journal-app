@@ -6,7 +6,7 @@ export const AuthContext = createContext({
 });
 
 
-export function useAuthContext(Component){
+export function withAuthContext(Component){
   const ContextedComponent = props => {
     const {authState, authDispatch} = useContext(AuthContext);
     return (

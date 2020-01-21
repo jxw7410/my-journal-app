@@ -1,19 +1,22 @@
 import React, {memo} from 'react';
 import PropType from 'prop-types';
 import Styled from 'styled-components';
-import { useModalContext } from '../../utils/modal_context';
+import { withModalContext } from '../../utils/modal_context';
 import EditJournalModal from './edit_journal_modal';
 import DeleteJournalModal from './delete_journal_modal';
-
+import NewEntryModal from './new_entry_modal';
 
 function Modal(props){
   let component;
   switch(props.modalType){
     case 'EDIT_JOURNAL_NAME':
-      component = <EditJournalModal {...props}/>
+      component = <EditJournalModal {...props} />
       break;
     case 'DELETE_JOURNAL':
       component = <DeleteJournalModal {...props} />
+      break;
+    case 'NEW_ENTRY':
+      component = <NewEntryModal {...props} />
       break;
     default:
       break;
@@ -47,5 +50,5 @@ const ModalContainer = Styled.div`
 
 
 
-export default useModalContext(memo(Modal));
+export default withModalContext(memo(Modal));
 

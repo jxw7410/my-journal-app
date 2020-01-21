@@ -8,7 +8,7 @@ export const JournalContext = createContext({
 
 
 
-export function useJournalContext(Component){
+export function withJournalContext(Component){
   const ContextedComponent = props => {
     const {journalState, journalDispatch} = useContext(JournalContext);
     return (

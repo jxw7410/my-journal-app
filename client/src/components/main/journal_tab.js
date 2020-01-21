@@ -3,8 +3,8 @@ import Styled from 'styled-components';
 import ButtonOne from '../utils/button_one';
 import PropTypes from 'prop-types';
 import { openModal } from '../../actions/modal_action';
-import { useModalContext } from '../../utils/modal_context';
-import { useJournalContext } from '../../utils/journal_context';
+import { withModalContext } from '../../utils/modal_context';
+import { withJournalContext } from '../../utils/journal_context';
 import { editJournal, deleteJournal } from '../../actions/journal_actions';
 import { Link } from 'react-router-dom';
 
@@ -138,4 +138,4 @@ const JournalTabContainer = Styled.li`
   }
 `
 
-export default useJournalContext(useModalContext(memo(JournalTab)));
+export default withJournalContext(withModalContext(memo(JournalTab)));

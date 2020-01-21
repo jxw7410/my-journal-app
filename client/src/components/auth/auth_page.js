@@ -62,7 +62,7 @@ const Header = Styled.h1`
   justify-content: center;
   width: 100%;
   height: 70px;
-  background: purple;
+  background: ${props => props.theme.bg};
   color: white;
 `
 

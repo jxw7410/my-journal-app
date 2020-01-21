@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Styled from 'styled-components';
 import JournalAdderErrorDropdown from './journal_adder_error_dropdown';
 import ErrorMessage from '../utils/error_message';
-import { useJournalContext } from '../../utils/journal_context';
+import { withJournalContext } from '../../utils/journal_context';
 import { createJournal } from '../../actions/journal_actions';
 
 function JournalAdder(props) {
@@ -89,8 +89,8 @@ const AddJournalButton = Styled.button`
   height: 52px;
   width: 100px;
   font-size: inherit;
-  border: 1px solid purple;
-  background: purple;
+  border: 1px solid ${props => props.theme.bg};
+  background: ${props => props.theme.bg};
   padding: 5px 10px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -98,8 +98,8 @@ const AddJournalButton = Styled.button`
 
   &:hover {
     cursor: pointer;
-    background: #bf44bf;
+    opacity: 0.85;
   }
 `
 
-export default useJournalContext(JournalAdder);
+export default withJournalContext(JournalAdder);

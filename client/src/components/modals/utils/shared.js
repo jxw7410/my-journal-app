@@ -10,7 +10,8 @@ export const Container = Styled.div`
   width: ${({width}) => width || '500px'};
   height: ${({height}) => height || '200px'};
   background: white;
-  border-radius: 0.75rem;
+  border-radius: 0.8rem;
+  overflow: hidden;
 `
 
 export const ButtonContainer = Styled.div`
