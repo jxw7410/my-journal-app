@@ -32,8 +32,7 @@ function SignUpForm(props) {
     })
     .catch( err => {
       const errors = {};
-      
-      err.responseJSON.forEach( error => {
+      JSON.parse(err.request.response).forEach( error => {
         if (error.includes('Username')) 
           errors.username = error;
         else if(error.includes('Email'))
@@ -48,17 +47,12 @@ function SignUpForm(props) {
 
   return (
     <>
-      <br />
-
       <InputOne
         label='Username'
         onChange={onChange('username')}
         value={inputs.username}
         error={errors.username}
       />
-
-      <br />
-
       <InputOne
         label='Email'
         type='email'
@@ -66,8 +60,6 @@ function SignUpForm(props) {
         value={inputs.email}
         error={errors.email}
       />
-
-      <br />
 
       <InputOne
         label='Password'
@@ -77,20 +69,14 @@ function SignUpForm(props) {
         error={errors.password}
       />
 
-      <br />
-
       <SubmitButton
         onClick={onClick}>
         SIGN UP
       </SubmitButton>
 
-      <br />
-
       <Footer>
         <span>Already Register? <Link to='/login'>Login Instead</Link></span>
       </Footer>
-
-      <br />
     </>
   )
 }

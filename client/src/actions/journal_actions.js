@@ -1,5 +1,4 @@
-import $ from 'jquery';
-import { setAuthorizationHeader } from '../utils/authorization';
+import * as JournalApi from '../utils/journal_api';
 
 
 const receiveJournal = journal => ({
@@ -17,66 +16,32 @@ const removeJournal = journalId => ({
   journalId
 });
 
-function createJournalAPI(data){
-  return $.ajax({
-    beforeSend: setAuthorizationHeader,
-    type: 'POST',
-    url: '/api/journals',
-    data
-  })
-}
-
-function editJournalAPI(data){
-  return $.ajax({
-    beforeSend: setAuthorizationHeader,
-    type: 'PUT',
-    url: `/api/journals/${data.id}`,
-    data
-  })
-}
-
-function fetchJournalsAPI(){
-  return $.ajax({
-    beforeSend: setAuthorizationHeader,
-    type: 'GET',
-    url: '/api/journals'
-  })
-}
-
-function deleteJournalAPI(id){
-  return $.ajax({
-    beforeSend: setAuthorizationHeader,
-    type: 'DELETE',
-    url: `/api/journals/${id}`,
-  })
-}
-
 
 export function createJournal(dispatch){
   return data => (
-    createJournalAPI(data)
-      .then( res => dispatch(receiveJournal(res.journal)))
+    JournalApi.createJournal(data)
+      .then(res => dispatch(receiveJournal(res.data.journal)))
   )
 }
 
 export function editJournal(dispatch){
   return data => (
-    editJournalAPI(data)
-      .then( res => dispatch(receiveJournal(res.journal)))
+    JournalApi.editJournal(data)
+      .then( res => dispatch(receiveJournal(res.data.journal)))
   )
 }
 
 export function fetchJournals(dispatch){
   return () => (
-    fetchJournalsAPI()
-      .then( res => dispatch(receiveJournals(res.journals)))
+    JournalApi.getJournals()
+      .then( res => dispatch(receiveJournals(res.data.journals)))
   )
 }
 
 export function deleteJournal(dispatch){
   return data => (
-    deleteJournalAPI(data.id)
-      .then( res => dispatch(removeJournal(res.journalId)))
+    JournalApi.deleteJournal(data.id)
+      .then( res => dispatch(removeJournal(res.data.journalId)))
   )
 }
 

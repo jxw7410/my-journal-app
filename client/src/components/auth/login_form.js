@@ -32,7 +32,7 @@ function LoginForm(props) {
       user: inputs
     })
     .catch( err => {
-      switch(err.status){
+      switch(err.request.status){
         case 401:
           return setError("Invalid Email or Password")
         default:
@@ -44,7 +44,7 @@ function LoginForm(props) {
   return (
     <>
       { error.length ? <ErrorMessage>{error}</ErrorMessage> : null }
-      <br />
+
 
       <InputOne
         label='Email'
@@ -53,8 +53,6 @@ function LoginForm(props) {
         value={inputs.email}
       />
 
-      <br />
-
       <InputOne
         label='Password'
         type='password'
@@ -62,14 +60,11 @@ function LoginForm(props) {
         value={inputs.password}
       />
 
-      <br />
 
       <SubmitButton
         onClick={onClick}>
         LOGIN
       </SubmitButton>
-
-      <br />
 
       <Footer>
         <span>
@@ -77,7 +72,6 @@ function LoginForm(props) {
         </span>
       </Footer>
 
-      <br />
     </>
   )
 }

@@ -1,21 +1,5 @@
-import $ from 'jquery';
 import jwt_decode from 'jwt-decode'
-
-function registerUserAPI(data){
-  return $.ajax({
-    type: 'POST',
-    url: '/api/signup',
-    data
-  })
-}
-
-function loginUserAPI(data){
-  return $.ajax({
-    type:'POST',
-    url: '/api/login',
-    data
-  })
-}
+import * as AuthApi from '../utils/auth_api';
 
 
 function receiveUser(user){
@@ -29,10 +13,12 @@ function removeUser(){
   return {
     type: 'REMOVE_USER'
   }
-}
+} 
 
 function authenticateUser(dispatch, jwt){
   localStorage.setItem('jwt', jwt);
+  AuthApi.setAuthToken(jwt);
+
   const decoded = jwt_decode(jwt);
   const data = {
     username: decoded.username, 
@@ -44,19 +30,22 @@ function authenticateUser(dispatch, jwt){
 
 export function logoutUser(dispatch){
   localStorage.removeItem('jwt');
-  dispatch(removeUser())
+  AuthApi.setAuthToken(null);
+  dispatch(removeUser());
 }
 
 export function registerUser(dispatch){
   return data => {
-    return registerUserAPI(data)
-      .then( res => authenticateUser(dispatch, res.jwt))
+    return AuthApi.registerUser(data)
+      .then( ({data}) => authenticateUser(dispatch, data.jwt))
   }
 }
 
 export function loginUser(dispatch){
   return data => {
-    return loginUserAPI(data)
-      .then( res => authenticateUser(dispatch, res.jwt))
+    return AuthApi.loginUser(data)
+      .then( ({data}) => { 
+        return authenticateUser(dispatch, data.jwt)
+      })
   }
-}
+} 

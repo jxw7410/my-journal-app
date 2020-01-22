@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_02_214246) do
+ActiveRecord::Schema.define(version: 2020_01_21_233328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "entries", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "journal_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["journal_id", "name"], name: "index_entries_on_journal_id_and_name", unique: true
+    t.index ["journal_id"], name: "index_entries_on_journal_id"
+  end
 
   create_table "journals", force: :cascade do |t|
     t.string "name", default: "", null: false

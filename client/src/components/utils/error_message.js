@@ -37,7 +37,7 @@ const Span = Styled.span`
   width: ${ props => props.width };
   padding: ${ props => props.padding };
   white-space: nowrap;
-
+  margin: 0px !important;
   &::before{
     content: "*";
   }

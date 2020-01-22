@@ -25,16 +25,18 @@ function JournalAdder(props) {
     createJournal(props.journalDispatch)({
       journal: input
     })
-      .then(() => setInput({ name: "" }))
-      .fail(err => handleError(err))
+    .then(
+      () => setInput({ name: "" }),
+      err => handleError(err)
+    )
   }
 
   const handleError = err => {
-    switch (err.status) {
+    switch (err.request.status) {
       case 422:
         setError({
           render: true,
-          message: err.responseJSON[0]
+          message: JSON.parse(err.request.response)[0]
         });
         break;
       default:

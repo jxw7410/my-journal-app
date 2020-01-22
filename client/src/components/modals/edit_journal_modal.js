@@ -25,16 +25,14 @@ function EditJournalModal(props){
   const editJournal = e => {
     e.preventDefault();
     props.modalCB(name)
-      .then(() => props.modalDispatch(closeModal()))
-      .fail(err => {
-        setError(err.responseJSON);
-      })
+      .then(
+        () => props.modalDispatch(closeModal()),
+        err => setError(JSON.parse(err.request.response))
+      )
   }
 
   return (
-    <Container
-      onClick={ e => e.stopPropagation()}
-    > 
+    <Container onClick={ e => e.stopPropagation()}> 
       <ErrorMessageContainer>
         { error.length ? <ErrorMessage>{error[0]}</ErrorMessage> : null } 
       </ErrorMessageContainer>

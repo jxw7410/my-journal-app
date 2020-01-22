@@ -54,9 +54,13 @@ const AuthForm = Styled.form`
   box-shadow: 0px 0px 10px gray;
   overflow: hidden;
   border-radius: 5px;
+
+  & > * {
+    margin-bottom: 20px;
+  }
 `
 const Header = Styled.h1`
-  margin: 0;
+  margin: 0 0 20px 0;
   display: flex;
   align-items: center;
   justify-content: center;
